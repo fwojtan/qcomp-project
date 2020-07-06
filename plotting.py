@@ -1,0 +1,36 @@
+from futils import*
+#pdata = np.load('Data/10k_cos_01_avg.npy')
+tdata = np.load('Data/timedata3000.npy')
+pdata = np.load('Data/Milestone_Data/cosine_method_10k.npy')
+p2data = np.load('Data/Milestone_Data/evolution_method_10k.npy')
+obedata = np.load('Data/OBE_Solution.npy')
+resids, nresids = residuals(pdata, obedata)
+values = [15, 20, 25, 30]
+pp.subplots(2, 1, sharex=True)
+grid = pp.GridSpec(2, 1, hspace = 0, height_ratios=[3, 1])
+pp.subplot(grid[0, 0])
+pp.plot(tdata[:3000], obedata[:3000], label = 'OBE soln', color = (1, 0, 0), linestyle = 'dashed')
+pp.plot(tdata[:3000], pdata[:3000], label = 'cos MCWF', color = (0, 1, 1))
+pp.plot(tdata[:3000], p2data[:3000], label = 'evol MCWF', color = (0, 1, 0))
+pp.legend()
+pp.ylabel('Excited state population')
+pp.title('10k Iterations - Comparison of Methods')
+ax2 = pp.subplot(grid[1, 0])
+pp.scatter(tdata[:3000], nresids[:3000], marker='.', linewidths=0, s=5)
+ax2.set_ylim(-0.04, 0.04)
+pp.ylabel('Residuals')
+
+#pp.plot(tdata, np.load('Data/Decay_Rate_Tests/20_steps_100k_.npy'), label = '0.2')
+#pp.plot(tdata, np.load('Data/Decay_Rate_Tests/25_steps_100k_.npy'), label = '25')
+#pp.plot(tdata, np.load('Data/Decay_Rate_Tests/30_steps_100k_.npy'), label = '30')
+#pp.plot(tdata, np.load('Data/Decay_Rate_Tests/40_steps_100k_.npy'), label = '0.4')
+#pp.plot(tdata, np.load('Data/Decay_Rate_Tests/50_steps_100k_.npy'), label = '50')
+#pp.plot(tdata, np.load('Data/Decay_Rate_Tests/60_steps_100k_.npy'), label = '0.6')
+#pp.plot(tdata, np.load('Data/Decay_Rate_Tests/70_steps_.npy'), label = '70')
+#pp.plot(tdata, np.load('Data/Actual_required_rate_100k_.npy'))
+#for i in values:
+    #pp.plot(tdata, np.load('Data/Decay_Rate_Tests/10k_cos_'+str(i)+'_.npy'), label = str(i*0.01))
+
+#pp.xlabel('Time / 10 timesteps')
+
+pp.show()
